@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head><meta charset="utf-8"><title>quill fixture</title>
+<style>body{font-family:system-ui;padding:40px}#composer{max-width:700px}.ql-editor{min-height:100px;border:1px solid #ccc;padding:10px;font:14px monospace;white-space:pre-wrap}button{margin-top:8px;padding:8px 16px}</style>
+</head>
+<body>
+  <div id="composer"></div>
+  <div id="sent-log" data-sent="0"></div>
+  <script>
+    // Reproduce Gemini: the rich-textarea > ql-container > ql-editor is created
+    // LAZILY, ~400ms after load (WASM-heavy app), to exercise the extension's
+    // MutationObserver + periodic rescan + focusin discovery.
+    const log = document.getElementById('sent-log');
+    setTimeout(() => {
+      const composer = document.getElementById('composer');
+      composer.innerHTML =
+        '<rich-textarea class="text-input-field_textarea ql-container ql-bubble">' +
+          '<div class="ql-editor" contenteditable="true" role="textbox"></div>' +
+        '</rich-textarea>' +
+        '<button class="send-button" aria-label="Send message" mattooltip="Send message">Send</button>';
+      const ed = composer.querySelector('.ql-editor');
+      const btn = composer.querySelector('.send-button');
+      function doSend() {
+        const n = Number(log.dataset.sent) + 1;
+        log.dataset.sent = String(n);
+        log.textContent = 'SENT:' + ed.innerText;
+      }
+      btn.addEventListener('click', doSend);
+      ed.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); doSend(); }
+      }, true);
+    }, 400);
+  </script>
+</body>
+</html>

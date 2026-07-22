@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head><meta charset="utf-8"><title>prosemirror fixture</title>
+<style>body{font-family:system-ui;padding:40px}#composer{max-width:700px}.ProseMirror{min-height:100px;border:1px solid #ccc;padding:10px;font:14px monospace;white-space:pre-wrap}button{margin-top:8px;padding:8px 16px}</style>
+</head>
+<body>
+  <div id="composer">
+    <div id="prompt-textarea" class="ProseMirror" contenteditable="true" role="textbox"></div>
+    <button data-testid="send-button" aria-label="Send prompt">Send</button>
+  </div>
+  <div id="sent-log" data-sent="0"></div>
+  <script>
+    const ed = document.getElementById('prompt-textarea');
+    const btn = document.querySelector('[data-testid="send-button"]');
+    const log = document.getElementById('sent-log');
+    function doSend() {
+      const n = Number(log.dataset.sent) + 1;
+      log.dataset.sent = String(n);
+      log.textContent = 'SENT:' + ed.innerText;
+    }
+    btn.addEventListener('click', doSend);
+    // CRITICAL: register Enter handler on the editor element itself, in capture
+    // phase, exactly like ProseMirror does. This is the race the extension's
+    // document-level capture listener must win.
+    ed.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); doSend(); }
+    }, true);
+  </script>
+</body>
+</html>

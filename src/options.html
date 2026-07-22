@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <title>Secure AI Prompt — Settings</title>
+  <style>
+    :root {
+      --bg: #0c1220; --panel: #131b2e; --line: #232e48;
+      --text: #e8ecf4; --dim: #9aa7c0; --accent: #3a6df0;
+      --red: #ff8a8a; --amber: #f2c464;
+    }
+    body {
+      margin: 0; padding: 40px 20px; background: var(--bg); color: var(--text);
+      font: 14px/1.55 ui-sans-serif, system-ui, -apple-system, sans-serif;
+      display: flex; justify-content: center;
+    }
+    main { width: min(680px, 100%); }
+    h1 { font-size: 20px; margin: 0 0 4px; }
+    .sub { color: var(--dim); margin-bottom: 28px; }
+    section {
+      background: var(--panel); border: 1px solid var(--line);
+      border-radius: 12px; padding: 18px 20px; margin-bottom: 16px;
+    }
+    h2 { font-size: 14px; margin: 0 0 12px; text-transform: uppercase; letter-spacing: 0.06em; color: var(--dim); }
+    label.opt { display: flex; align-items: center; gap: 10px; padding: 6px 0; cursor: pointer; }
+    input[type="checkbox"], input[type="radio"] { accent-color: var(--accent); }
+    .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0 20px; }
+    textarea, input[type="text"] {
+      width: 100%; box-sizing: border-box; background: #0c1220; color: var(--text);
+      border: 1px solid var(--line); border-radius: 8px; padding: 9px 11px;
+      font: 13px ui-monospace, Menlo, Consolas, monospace;
+    }
+    textarea { min-height: 96px; resize: vertical; }
+    .hint { font-size: 12px; color: var(--dim); margin-top: 6px; }
+    button {
+      background: var(--accent); color: #fff; border: 0; border-radius: 9px;
+      padding: 10px 18px; font-weight: 700; font-size: 14px; cursor: pointer;
+    }
+    button:hover { filter: brightness(1.1); }
+    .saved { color: #7dd3a0; font-weight: 600; margin-left: 12px; opacity: 0; transition: opacity 200ms; }
+    .saved.show { opacity: 1; }
+    .managed-banner {
+      display: none; background: rgba(242, 196, 100, 0.1); border: 1px solid rgba(242, 196, 100, 0.35);
+      color: var(--amber); border-radius: 10px; padding: 10px 14px; margin-bottom: 16px; font-size: 13px;
+    }
+  </style>
+</head>
+<body>
+<main>
+  <h1>Secure AI Prompt</h1>
+  <div class="sub">All scanning runs locally. These settings are stored in your Chrome profile.</div>
+
+  <div class="managed-banner" id="managedBanner">
+    Some settings on this page are enforced by your organization's policy and cannot be changed here.
+  </div>
+
+  <section>
+    <h2>Mode</h2>
+    <label class="opt"><input type="radio" name="mode" value="warn" /> Warn — show findings, user can choose to send anyway</label>
+    <label class="opt"><input type="radio" name="mode" value="block" /> Block — sending is prevented while secrets are present</label>
+    <label class="opt"><input type="checkbox" id="blurEnabled" /> Blur detected values inline while typing</label>
+  </section>
+
+  <section>
+    <h2>Detectors</h2>
+    <div class="grid" id="detectorList"></div>
+    <label class="opt"><input type="checkbox" id="entropy" /> High-entropy string detection (catches unknown secret formats)</label>
+    <label class="opt"><input type="checkbox" id="detectCode" /> Flag code blocks carrying confidentiality markers</label>
+    <label class="opt"><input type="checkbox" id="flagAllCode" /> Strict: flag <em>all</em> large code blocks</label>
+  </section>
+
+  <section>
+    <h2>Custom rules (one per line: label :: regex)</h2>
+    <textarea id="customPatterns" placeholder="Project codename :: \bPROJECT-ZEUS\b&#10;Internal ticket :: \bJIRA-INT-\d+\b"></textarea>
+    <div class="hint">Rules are matched case-insensitively and treated as "review" severity. Invalid regexes are skipped silently.</div>
+  </section>
+
+  <section>
+    <h2>Allowlist (substrings that are safe to send, one per line)</h2>
+    <textarea id="allowlist" placeholder="sk-ant-EXAMPLE&#10;10.0.0.1"></textarea>
+  </section>
+
+  <button id="save">Save settings</button><span class="saved" id="savedNote">Saved</span>
+</main>
+<script src="detectors.js"></script>
+<script src="options.js"></script>
+</body>
+</html>

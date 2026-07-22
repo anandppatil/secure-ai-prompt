@@ -1,0 +1,151 @@
+/* Secure AI Prompt — injected styles. All selectors prefixed sap- to avoid collisions. */
+
+.sap-overlay {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 2147483600;
+}
+
+.sap-blur {
+  position: fixed;
+  pointer-events: none;
+  border-radius: 4px;
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  box-shadow: inset 0 0 0 1.5px currentColor;
+  transition: opacity 120ms ease;
+}
+.sap-block { color: rgba(214, 69, 69, 0.9); background: rgba(214, 69, 69, 0.10); }
+.sap-warn  { color: rgba(219, 154, 26, 0.9); background: rgba(219, 154, 26, 0.10); }
+
+.sap-mirror {
+  position: fixed;
+  top: -10000px;
+  left: -10000px;
+  visibility: hidden;
+  pointer-events: none;
+  white-space: pre-wrap;
+}
+
+/* ----- Modal ----- */
+.sap-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 2147483646;
+  background: rgba(12, 16, 24, 0.55);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+}
+
+.sap-modal {
+  width: min(520px, calc(100vw - 32px));
+  max-height: 80vh;
+  overflow: auto;
+  background: #101623;
+  color: #e8ecf4;
+  border: 1px solid #2a3550;
+  border-radius: 14px;
+  padding: 20px 22px;
+  box-shadow: 0 24px 64px rgba(0, 0, 0, 0.45);
+}
+
+.sap-modal-head {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 16px;
+  font-weight: 650;
+  letter-spacing: 0.01em;
+}
+.sap-shield { color: #d64545; font-size: 12px; }
+
+.sap-modal-sub {
+  margin: 10px 0 14px;
+  font-size: 13px;
+  line-height: 1.5;
+  color: #9aa7c0;
+}
+
+.sap-findings {
+  list-style: none;
+  margin: 0 0 16px;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.sap-findings li {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: #161e30;
+  border: 1px solid #232e48;
+  border-radius: 8px;
+  padding: 8px 10px;
+  font-size: 12.5px;
+}
+.sap-sev {
+  flex: none;
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  padding: 2px 7px;
+  border-radius: 999px;
+}
+.sap-sev-block { background: rgba(214, 69, 69, 0.16); color: #ff8a8a; }
+.sap-sev-warn  { background: rgba(219, 154, 26, 0.16); color: #f2c464; }
+.sap-lbl { flex: 1; }
+.sap-preview {
+  flex: none;
+  font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  font-size: 11px;
+  color: #7f8db0;
+  background: #0c1220;
+  border-radius: 5px;
+  padding: 2px 6px;
+  max-width: 160px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.sap-more { color: #7f8db0; font-size: 12px; justify-content: center; }
+
+.sap-actions { display: flex; gap: 8px; flex-wrap: wrap; }
+.sap-btn {
+  appearance: none;
+  border: 0;
+  border-radius: 8px;
+  padding: 9px 14px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: filter 100ms ease;
+}
+.sap-btn:hover { filter: brightness(1.12); }
+.sap-btn:focus-visible { outline: 2px solid #7aa2ff; outline-offset: 2px; }
+.sap-btn-primary { background: #3a6df0; color: #fff; }
+.sap-btn-secondary { background: #223052; color: #dbe4f8; }
+.sap-btn-ghost { background: transparent; color: #93a1c2; border: 1px solid #2a3550; }
+
+.sap-toast {
+  position: fixed;
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 2147483646;
+  background: #101623;
+  color: #e8ecf4;
+  border: 1px solid #2a3550;
+  border-radius: 10px;
+  padding: 10px 16px;
+  font: 600 13px ui-sans-serif, system-ui, sans-serif;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.4);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sap-blur, .sap-btn { transition: none; }
+}

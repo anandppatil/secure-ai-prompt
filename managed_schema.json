@@ -1,0 +1,44 @@
+{
+  "type": "object",
+  "properties": {
+    "enabled": {
+      "type": "boolean",
+      "description": "Force protection on/off. When set by policy, users cannot change it."
+    },
+    "mode": {
+      "type": "string",
+      "enum": ["warn", "block"],
+      "description": "warn = user sees findings and may override; block = sending is prevented while secret-severity findings exist."
+    },
+    "allowSendAnyway": {
+      "type": "boolean",
+      "description": "If false, the 'Send anyway' override button is removed entirely."
+    },
+    "blurEnabled": { "type": "boolean" },
+    "entropy": { "type": "boolean" },
+    "detectCode": { "type": "boolean" },
+    "flagAllCode": { "type": "boolean" },
+    "disabledDetectors": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "Detector IDs to disable, e.g. [\"email-bulk\"]."
+    },
+    "customPatterns": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "label": { "type": "string" },
+          "pattern": { "type": "string" },
+          "flags": { "type": "string" },
+          "severity": { "type": "string", "enum": ["warn", "block"] }
+        }
+      },
+      "description": "Company-specific regexes: project codenames, internal domains, ticket formats."
+    },
+    "allowlist": {
+      "type": "array",
+      "items": { "type": "string" }
+    }
+  }
+}

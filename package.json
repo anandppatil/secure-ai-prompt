@@ -1,0 +1,15 @@
+{
+  "name": "secure-ai-prompt",
+  "version": "0.1.6",
+  "description": "Enterprise guardrail Chrome extension — scans prompts to web AI tools locally for secrets before send.",
+  "private": true,
+  "scripts": {
+    "test:unit": "node --test test/detectors.test.js",
+    "test:e2e": "playwright test",
+    "test": "npm run test:unit && npm run test:e2e",
+    "e2e:install": "playwright install chromium --with-deps"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.48.0"
+  }
+}

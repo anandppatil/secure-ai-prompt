@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head><meta charset="utf-8"><title>textarea fixture</title>
+<style>body{font-family:system-ui;padding:40px}#composer{max-width:700px}textarea{width:100%;height:120px;font:14px monospace;padding:10px}button{margin-top:8px;padding:8px 16px}</style>
+</head>
+<body>
+  <div id="composer">
+    <textarea id="prompt" placeholder="Message"></textarea>
+    <button id="send" aria-label="Send message" type="submit">Send</button>
+  </div>
+  <div id="sent-log" data-sent="0"></div>
+  <script>
+    // Simulate a site that sends on button click AND on Enter (no shift).
+    const ta = document.getElementById('prompt');
+    const btn = document.getElementById('send');
+    const log = document.getElementById('sent-log');
+    function doSend() {
+      const n = Number(log.dataset.sent) + 1;
+      log.dataset.sent = String(n);
+      log.textContent = 'SENT:' + ta.value;
+    }
+    btn.addEventListener('click', doSend);
+    ta.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); doSend(); }
+    });
+  </script>
+</body>
+</html>

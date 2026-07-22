@@ -1,0 +1,18 @@
+{
+  "enabled": { "Value": true },
+  "mode": { "Value": "block" },
+  "allowSendAnyway": { "Value": false },
+  "blurEnabled": { "Value": true },
+  "entropy": { "Value": true },
+  "detectCode": { "Value": true },
+  "flagAllCode": { "Value": false },
+  "disabledDetectors": { "Value": [] },
+  "customPatterns": {
+    "Value": [
+      { "label": "Project codename", "pattern": "\\bPROJECT-(ZEUS|ATLAS)\\b", "flags": "i", "severity": "block" },
+      { "label": "Internal ticket", "pattern": "\\bACME-INT-\\d+\\b", "flags": "i", "severity": "warn" },
+      { "label": "Corp domain", "pattern": "\\b[a-z0-9-]+\\.acme-corp\\.net\\b", "flags": "i", "severity": "warn" }
+    ]
+  },
+  "allowlist": { "Value": ["sk-ant-EXAMPLE", "AKIAIOSFODNN7EXAMPLE"] }
+}
